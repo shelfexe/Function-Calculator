@@ -1,0 +1,52 @@
+﻿
+    <Window x:Class="Function_Calculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Function_Calculator"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="300" Width="800" >
+    <Window.Resources>
+        <ControlTemplate x:Key="validationTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Border BorderBrush="Red" BorderThickness="2">
+                    <AdornedElementPlaceholder />
+                </Border>
+                <TextBlock Foreground="Red" Padding="5,5,0,0">Пожалуйста, введите числовое значение!</TextBlock>
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*"></ColumnDefinition>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="a:" Grid.Row="1" Grid.Column="0" Padding="20,2,0,0" ></TextBlock>
+        <TextBlock Text="b:" Grid.Row="2" Grid.Column="0" Padding="20,2,0,0"></TextBlock>
+        <TextBlock Text="c:" Grid.Row="3" Grid.Column="0" Padding="20,2,0,0"></TextBlock>
+        <TextBox x:Name="a" HorizontalAlignment="Stretch" Height="Auto" TextWrapping="Wrap"  VerticalAlignment="Stretch" Width="Auto" Margin="2,2,2,2" Validation.ErrorTemplate="{StaticResource validationTemplate}" Text="{Binding SelectedFunction.a, UpdateSourceTrigger=LostFocus}"  Grid.Column="1" Grid.Row="1" />
+        <TextBox x:Name="b" HorizontalAlignment="Stretch" Height="Auto" TextWrapping="Wrap"  VerticalAlignment="Stretch" Width="Auto" Margin="2,2,2,2" Validation.ErrorTemplate="{StaticResource validationTemplate}" Text="{Binding SelectedFunction.b, UpdateSourceTrigger=LostFocus}" Grid.Column="1" Grid.Row="2" />
+        <ComboBox x:Name="c" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Margin="2,2,2,2" ItemsSource="{Binding SelectedFunction.c_array}" SelectedItem="{Binding SelectedFunction.c, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Height="Auto" Grid.Row="3" />
+
+        <ListBox x:Name="functions" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" ItemsSource="{Binding functions}" SelectedItem="{Binding SelectedFunction}" DisplayMemberPath="Name" Grid.Row="0" Grid.Column="1" Margin="2,2,2,2"/>
+        <DataGrid x:Name="values" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch"  Width="Auto" Margin="2,2,2,70"  ItemsSource="{Binding SelectedFunctionForTable}" AutoGenerateColumns="False" Grid.Column="2" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="x" Binding="{Binding x, UpdateSourceTrigger=LostFocus}"   Width="0.1*"/>
+                <DataGridTextColumn Header="y" Binding="{Binding y, UpdateSourceTrigger=LostFocus}" Width="0.1*"/>
+                <DataGridTextColumn Header="F(x,y)" Binding="{Binding Fxy}" IsReadOnly="True" Width="*" />
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+
+    </Grid>
+</Window>
